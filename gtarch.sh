@@ -5,7 +5,6 @@ set -u
 
 function next_page {
     cd $DSTFOLDER 
-#    echo http://$BASEURI$BEFORE
     curl -H "Accept-Encoding: gzip" -s "http://$BASEURI/${BEFORE#/}" \
         | gunzip  \
         | grep -E "hover" \
@@ -17,7 +16,6 @@ function next_page {
         | grep "content-image" \
         | sed -E 's,.*data-src="([^""]*)".*,\1,' \
         | wget -nc -q -i - &
-    #rm *.[123456789] 2>/dev/null
     cd - >/dev/null
 }
 
