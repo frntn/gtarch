@@ -24,8 +24,9 @@ BASENAME="$(basename $0)"
 BEFORE="/archive?before_time=$(date +%s)"
 SAMEURI=true
 
-for BASEURI in $(grep -vE "^#|^$" "$BASEFOLDER/${BASENAME%.*}.in")
+for BASEURI in $(grep -vE "^#|^$|^https" "$BASEFOLDER/${BASENAME%.*}.in" | sed 's,^http://,,')
 do
+    BASEURI=${BASEURI%%/*}
     echo -e "\n=== $BASEURI ==="
     DSTFOLDER="$BASEFOLDER/downloaded/$BASEURI"
     mkdir -p "$DSTFOLDER" && \
